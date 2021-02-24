@@ -1,4 +1,4 @@
-<%- include('../partials/header') %>
+<%- include('../partials/header-main') %>
   <div class="d-flex justify-content-between align-items-end mb-2">
     <h1 class="mb-2"><%= title %>  Fund</h1>
     <% if (title === 'List') { %>
@@ -9,8 +9,8 @@
   </div>
 
   <% if (title === 'List') { %>
-    <%- include('components/table', {data, getDayRemain, parseCurrency}) %> 
+    <%- include('components/table', {data, parseCurrency}) %> 
   <% } else { %>
     <%- include('components/form', {data, parseDate}) %> 
   <% } %>
-<%- include('../partials/footer') %> 
+<%- include('../partials/footer-main') %> 

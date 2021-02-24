@@ -10,5 +10,6 @@ router.get('/add', FundController.add)
 router.post('/add', uploadImage, FundController.add)
 router.get('/edit/:id', FundController.edit)
 router.post('/edit/:id', uploadImage, FundController.edit)
+router.get('/delete/:id', FundController.delete)
 
 module.exports = router

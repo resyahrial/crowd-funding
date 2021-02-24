@@ -1,3 +1,12 @@
-<%- include('partials/header') %>
-  <h1>Welcome</h1>
-<%- include('partials/footer') %> 
+<%- include('partials/header-main') %>
+  <h1>Find your business</h1>
+  <div class="container mt-4">
+    <div class="row">
+      <% data.forEach(fund => { %>
+        <div class="col-4">
+          <%- include('partials/card', {fund, parseCurrency}) %> 
+        </div>
+      <% }) %>
+    </div>
+  </div>
+<%- include('partials/footer-main') %> 

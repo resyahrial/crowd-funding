@@ -16,13 +16,13 @@
         <th scope="row"><%= elem.name %></th>
         <td><%= elem.type %></td>
         <td><%= parseCurrency(elem.business_value) %></td>
-        <td><%= elem.Users.length %></td>
-        <td><%= parseCurrency(0) %></td>
-        <td><%= getDayRemain(elem.due_date) <= 0 ? 'Closed' : 'Active' %></td>
+        <td><%= elem.UserFunds.length %></td>
+        <td><%= parseCurrency(elem.UserFunds.reduce((acc, user) => acc + user.amount, 0)) %></td>
+        <td><%= elem.getRemainDate() <= 0 ? 'Closed' : 'Active' %></td>
         <td>
-          <a href="<%= `/funds/edit/${elem.id}` %> " class="btn btn-warning">Edit</a>
-          <a href="<%= `/funds/delete/${elem.id}` %> " class="btn btn-danger">Delete</a>
-          <a href="<%= `/funds/users/${elem.id}` %> " class="btn btn-primary">Show Investor</a>
+          <a href="<%= `/admin/funds/edit/${elem.id}` %> " class="btn btn-warning">Edit</a>
+          <a href="<%= `/admin/funds/delete/${elem.id}` %> " class="btn btn-danger">Delete</a>
+          <a href="<%= `/admin/funds/users/${elem.id}` %> " class="btn btn-primary">Show Investor</a>
         </td>
       </tr>
     <% }) %>

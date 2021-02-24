@@ -13,6 +13,11 @@ module.exports = (sequelize, DataTypes) => {
       Fund.belongsToMany(models.User, { through: models.UserFund})
       Fund.hasMany(models.UserFund, { foreignKey: 'FundId' })
     }
+
+    getRemainDate() {
+      const remainDay = new Date() - this.due_date
+      return new Date(remainDay).getDate()
+    }
   };
   Fund.init({
     name: DataTypes.STRING,

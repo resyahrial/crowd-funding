@@ -1,0 +1,26 @@
+<%- include('partials/header') %>
+  <div class="container-fluid">
+    <div class="row" style="height: 100vh;">
+      <div class="col-7 bg-secondary"></div>
+      <div class="col-5" style="padding-top: 150px;">
+        <h1 class="h4 text-center mb-4">Sign Up</h1>
+        <form class="px-4 w-100" action="/signup" method="POST">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="email" class="form-control" id="name" name="name">
+          </div>
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="email" class="form-control" id="username" name="username">
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password">
+          </div>
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+          <a href="/" class="btn btn-outline-primary">Cancel</a>
+        </form>
+      </div>
+    </div>
+  </div>
+<%- include('partials/footer') %> 
