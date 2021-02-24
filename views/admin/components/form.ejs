@@ -1,27 +1,70 @@
-<form action="/funds/add" method="POST" enctype="multipart/form-data">
+<form action="<%= `/funds/${data ? 'edit/' + data.id : 'add'}` %>" method="POST" enctype="multipart/form-data">
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="input name">
+    <input 
+      type="text" 
+      class="form-control" 
+      id="name" 
+      name="name" 
+      placeholder="input name"
+      value="<%= data ? data.name : '' %>"
+    >
   </div>
   <div class="form-group">
     <label for="type">Type</label>
-    <input type="text" class="form-control" id="type" name="type" placeholder="input type">
+    <input 
+      type="text" 
+      class="form-control" 
+      id="type" 
+      name="type" 
+      placeholder="input type"
+      value="<%= data ? data.type : '' %>"
+    >
   </div>
   <div class="form-group">
     <label for="business_value">Business Value</label>
-    <input type="number" class="form-control" id="business_value" name="business_value" placeholder="input value">
+    <input 
+      type="number" 
+      class="form-control" 
+      id="business_value" 
+      name="business_value" 
+      placeholder="input value"
+      value="<%= data ? data.business_value : '' %>"
+    >
   </div>
   <div class="form-group">
     <label for="due_date">Due date fund raising</label>
-    <input type="date" class="form-control" id="due_date" name="due_date" placeholder="isert date">
+    <input 
+      type="date" 
+      class="form-control" 
+      id="due_date" 
+      name="due_date"
+      value="<%= data ? parseDate(data.due_date) : '' %>"
+    >
   </div>
   <div class="form-group">
     <label for="image_url">Image</label>
-    <input type="file" class="form-control" id="image_url" name="image_url">
+    <input 
+      type="file" 
+      class="form-control" 
+      id="image_url" 
+      name="image_url"
+    >
+    <% if (data) { %>
+      <small>Choose image if you want to update</small>
+    <% } %>
   </div>
+  <input type="hidden" name="last_image_url" value="<%= data ? data.image_url : '' %>">
   <div class="form-group">
     <label for="description">Description</label>
-    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+    <textarea 
+      class="form-control" 
+      id="description" 
+      name="description" 
+      rows="3" 
+      placeholder="type description"
+    ><%= data ? data.description : '' %>
+    </textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
   <a href="<%= '/funds' %> " class="btn btn-outline-primary">Cancel</a>

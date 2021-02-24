@@ -10,7 +10,7 @@
 
   <% if (title === 'List') { %>
     <%- include('components/table', {data, getDayRemain, parseCurrency}) %> 
-  <% } else if (title === 'Add') { %>
-    <%- include('components/form') %> 
+  <% } else { %>
+    <%- include('components/form', {data, parseDate}) %> 
   <% } %>
 <%- include('../partials/footer') %> 
