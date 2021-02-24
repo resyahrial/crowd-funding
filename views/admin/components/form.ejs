@@ -1,0 +1,28 @@
+<form action="/funds/add" method="POST" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="input name">
+  </div>
+  <div class="form-group">
+    <label for="type">Type</label>
+    <input type="text" class="form-control" id="type" name="type" placeholder="input type">
+  </div>
+  <div class="form-group">
+    <label for="business_value">Business Value</label>
+    <input type="number" class="form-control" id="business_value" name="business_value" placeholder="input value">
+  </div>
+  <div class="form-group">
+    <label for="due_date">Due date fund raising</label>
+    <input type="date" class="form-control" id="due_date" name="due_date" placeholder="isert date">
+  </div>
+  <div class="form-group">
+    <label for="image_url">Image</label>
+    <input type="file" class="form-control" id="image_url" name="image_url">
+  </div>
+  <div class="form-group">
+    <label for="description">Description</label>
+    <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  <a href="<%= '/funds' %> " class="btn btn-outline-primary">Cancel</a>
+</form>
