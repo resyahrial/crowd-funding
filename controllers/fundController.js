@@ -127,6 +127,30 @@ class Controller {
         res.send(err.message)
       })
   }
+
+  static users(req, res) {
+    const id = req.params.id
+    Fund
+      .findByPk(id, {
+        attributes: ['id', 'name'],
+        include: {
+          model: UserFund,
+          attributes: ['id', 'amount', 'status'],
+          include: {
+            model: User,
+            attributes: ['id', 'name']
+          }
+        }
+      })
+      .then(data => {
+        res.render('admin/fund-user', {
+          data,
+          parseCurrency
+        })
+      })
+      .catch(err => 
+        res.send(err))
+  }
 }
 
 module.exports = Controller

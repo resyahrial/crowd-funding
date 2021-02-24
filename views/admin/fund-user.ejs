@@ -1,0 +1,5 @@
+<%- include('../partials/header-main') %>
+  <h1 class="mb-4"><%= data.name %></h1>
+  <a href="/admin/funds">Back</a>
+  <%- include('components/table-fund-user', {userFunds: data.UserFunds, parseCurrency}) %>
+<%- include('../partials/footer-main') %> 

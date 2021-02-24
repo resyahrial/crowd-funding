@@ -1,0 +1,33 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Amount</th>
+      <th scope="col">Status</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% userFunds.forEach(userFund => { %>
+      <tr>
+        <th scope="row"><%= userFund.User.name %></th>
+        <td><%= parseCurrency(userFund.amount) %></td>
+        <td><%= userFund.status %></td>
+        <td>
+          <a 
+            href="<%= `/admin/userfund/verify/${userFund.id}` %>" 
+            class="btn btn-primary <%= userFund.status === 'Pending' ? '' : 'disabled' %>"
+          >
+            Verified
+          </a>
+          <a 
+            href="<%= `/admin/userfund/reject/${userFund.id}` %>"
+            class="btn btn-danger <%= userFund.status === 'Pending' ? '' : 'disabled' %>"
+          >
+            Reject
+          </a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

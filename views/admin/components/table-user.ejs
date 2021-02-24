@@ -1,0 +1,16 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Balance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% data.forEach(elem => { %>
+      <tr>
+        <th scope="row"><%= elem.name %></th>
+        <td><%= parseCurrency(elem.balance) %></td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
