@@ -1,0 +1,30 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Type</th>
+      <th scope="col">Business Value</th>
+      <th scope="col">Investor Amount</th>
+      <th scope="col">Fund Raised</th>
+      <th scope="col">Status</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% data.forEach(elem => { %>
+      <tr>
+        <th scope="row"><%= elem.name %></th>
+        <td><%= elem.type %></td>
+        <td><%= parseCurrency(elem.business_value) %></td>
+        <td><%= elem.Users.length %></td>
+        <td><%= parseCurrency(0) %></td>
+        <td><%= getDayRemain(elem.due_date) <= 0 ? 'Closed' : 'Active' %></td>
+        <td>
+          <a href="<%= `/funds/edit/${elem.id}` %> " class="btn btn-warning">Edit</a>
+          <a href="<%= `/funds/delete/${elem.id}` %> " class="btn btn-danger">Delete</a>
+          <a href="<%= `/funds/users/${elem.id}` %> " class="btn btn-primary">Show Investor</a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>

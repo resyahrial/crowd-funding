@@ -1,0 +1,9 @@
+<%- include('../partials/header') %>
+  <div class="d-flex justify-content-between align-items-end mb-2">
+    <h1 class="mb-2">List Fund</h1>
+    <div>
+      <a href="<%= '/funds/add' %> " class="btn btn-primary">Add</a>
+    </div>
+  </div>
+  <%- include('components/table', {data, getDayRemain, parseCurrency}) %> 
+<%- include('../partials/footer') %> 
