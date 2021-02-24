@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Ternak Pintar Holding",
+    "type": "Peternakan Ayam",
+    "business_value": 40000000,
+    "due_date": "2021-03-11",
+    "image_url": "http://localhost:3000/images/img1.png",
+    "description": "Ternak Paling Pintar"
+  },
+  {
+    "name": "Alfamart Mataram",
+    "type": "Ritel",
+    "business_value": 50000000,
+    "due_date": "2021-03-01",
+    "image_url": "http://localhost:3000/images/img2.png",
+    "description": "Belanja Hemat Harga Pas"
+  }
+]
