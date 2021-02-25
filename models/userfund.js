@@ -26,13 +26,22 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    status: DataTypes.STRING
+    status: DataTypes.STRING,
+    transaction_id: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'UserFund',
     hooks: {
       beforeCreate: (userfund) => {
         userfund.status = 'Pending'
+
+        // generate transaction id
+        const randomCode = (""+Math.random()).substring(2,5)
+        const currDate = new Date()
+        let month = currDate.getMonth() + 1
+        month = month <= 9 ? `0${month}` : `${month}`
+        const year = `${currDate.getFullYear()}`.slice(2)
+        userfund.transaction_id = `TRX-${month}${year}-${randomCode}`
       }
     }
   });

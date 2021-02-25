@@ -142,21 +142,26 @@ class Controller {
 
   static users(req, res) {
     const id = req.params.id
+    let passedData = {name: '', users: []}
     Fund
-      .findByPk(id, {
-        attributes: ['id', 'name'],
-        include: {
-          model: UserFund,
-          attributes: ['id', 'amount', 'status'],
-          include: {
-            model: User,
-            attributes: ['id', 'name']
-          }
-        }
+      .findByPk(id)
+      .then(data => {
+        passedData.name = data.name
+        return data.getUsers()
       })
       .then(data => {
+        data.forEach(el => {
+          const {transaction_id, amount, status} = el.UserFund
+          passedData.users.push({
+            name: el.name,
+            transaction_id,
+            amount,
+            status
+          })
+        })
+        // res.send(passedData)
         res.render('admin/fund-user', {
-          data,
+          data: passedData,
           parseCurrency
         })
       })

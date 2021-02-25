@@ -5,22 +5,22 @@ class Controller {
     const id = req.params.id
     let fundId
     UserFund
-      .findAll({
+      .findOne({
         where: {
-          id
-        },
-        attributes: {
-          exclude: ['createdAt', 'updatedAt']
+          transaction_id: id
         }
       })
       .then((data) => {
-        data.status = 'Verified'
-        fundId = data[0].FundId
+        fundId = data.FundId
+        const userfund = {
+          status: 'Verified'
+        }
         return UserFund
-          .update(data, {
+          .update(userfund, {
             where: {
-              id
-            }
+              transaction_id: id
+            },
+            fields: ['status']
           })
       })
       .then(() => {
@@ -35,43 +35,39 @@ class Controller {
     const id = req.params.id
     let userId, fundId, rejectedAmount
     UserFund
-      .findAll({
+      .findOne({
         where: {
-          id
-        },
-        attributes: {
-          exclude: ['createdAt', 'updatedAt']
+          transaction_id: id
         }
       })
       .then((data) => {
-        data.status = 'Rejected'
-        fundId = data[0].FundId
-        userId = data[0].UserId
-        rejectedAmount = data[0].amount
+        const userfund = {
+          status: 'Rejected'
+        }
+        fundId = data.FundId
+        userId = data.UserId
+        rejectedAmount = data.amount
         return UserFund
-          .update(data, {
+          .update(userfund, {
             where: {
-              id
-            }
+              transaction_id: id
+            },
+            fields: ['status']
           })
       })
       .then(() => {
-        return User
-          .findByPk(userId, {
-            attributes: {
-              exclude: ['createdAt', 'updatedAt']
-            }
-          })
+        return User.findByPk(userId)
       })
       .then((userData) => {
-        userData.balance += rejectedAmount
-        const {username, password, is_admin, name, balance} = userData
-        const newData = {username, password, is_admin, name, balance}
+        const newData = {
+          balance: userData.balance + rejectedAmount
+        }
         return User
           .update(newData, {
             where: {
               id: userId
-            }
+            },
+            fields: ['balance']
           })
       })
       .then(() => {

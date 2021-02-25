@@ -8,21 +8,21 @@
     </tr>
   </thead>
   <tbody>
-    <% userFunds.forEach(userFund => { %>
+    <% users.forEach(user => { %>
       <tr>
-        <th scope="row"><%= userFund.User.name %></th>
-        <td><%= parseCurrency(userFund.amount) %></td>
-        <td><%= userFund.status %></td>
+        <th scope="row"><%= user.name %></th>
+        <td><%= parseCurrency(user.amount) %></td>
+        <td><%= user.status %></td>
         <td>
           <a 
-            href="<%= `/admin/userfund/verify/${userFund.id}` %>" 
-            class="btn btn-primary <%= userFund.status === 'Pending' ? '' : 'disabled' %>"
+            href="<%= `/admin/userfund/verify/${user.transaction_id}` %>" 
+            class="btn btn-primary <%= user.status === 'Pending' ? '' : 'disabled' %>"
           >
             Verified
           </a>
           <a 
-            href="<%= `/admin/userfund/reject/${userFund.id}` %>"
-            class="btn btn-danger <%= userFund.status === 'Pending' ? '' : 'disabled' %>"
+            href="<%= `/admin/userfund/reject/${user.transaction_id}` %>"
+            class="btn btn-danger <%= user.status === 'Pending' ? '' : 'disabled' %>"
           >
             Reject
           </a>
