@@ -5,7 +5,7 @@ const session = require('express-session')
 const router = require('./routers')
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.set('view engine', 'ejs')
 
@@ -15,7 +15,7 @@ app.use(session({
   secret: 'secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }
+  cookie: { secure: true }
 }))
 app.use('/', router)
 
