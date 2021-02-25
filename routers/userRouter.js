@@ -10,6 +10,8 @@ router.get('/signin', UserController.signin)
 router.post('/signin', UserController.signin)
 router.get('/signup', UserController.signup)
 router.post('/signup', UserController.signup)
+router.get('/change', UserController.change)
+router.post('/change', UserController.change)
 
 router.use(isLogin)
 router.get('/topup', UserController.topup)

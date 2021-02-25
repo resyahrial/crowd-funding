@@ -1,5 +1,5 @@
 const {User} = require('../models')
-const {parseCurrency, checkPassword} = require('../helpers')
+const {parseCurrency, checkPassword, hashPassword} = require('../helpers')
 
 class Controller {
   static signin(req, res) {
@@ -112,6 +112,60 @@ class Controller {
       .then(() => {
         req.session.user.balance += +balance
         res.redirect('/')
+      })
+      .catch(err => {
+        res.render('failed', {errMsg: err.message})
+      })
+  }
+
+  static change(req, res) {
+    if (req.method === 'GET') {
+      res.render('form', {
+        title: 'change'
+      })
+      return
+    }
+
+    const {name, username, password} = req.body
+    let dataContainer
+    User
+      .findAll({
+        where: {
+          username
+        }
+      })
+      .then((data) => {
+        if (data.length === 0) {
+          throw new Error('Username not found')
+        } else if (data[0].username === 'admin') {
+          throw new Error('Access Restricted')
+        } else if (data[0].name !== name) {
+          throw new Error('Wrong name')
+        }
+
+        const newPass = {
+          password: hashPassword(password)
+        }
+
+        const tempData = data[0]
+        dataContainer = {
+          id: tempData.id,
+          name,
+          is_admin: tempData.is_admin,
+          balance: tempData.balance
+        }
+        return User
+          .update(newPass, {
+            where: {
+              id:tempData.id
+            },
+            fields: ['password']
+          })
+      })
+      .then(() => {
+        req.session.user = dataContainer
+        const path = dataContainer.is_admin ? '/admin' : '/'
+        res.redirect(path)
       })
       .catch(err => {
         res.render('failed', {errMsg: err.message})

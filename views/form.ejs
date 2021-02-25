@@ -8,6 +8,8 @@
           <%- include('partials/form-signin') %>
         <% } else if (title === 'signup') { %>
           <%- include('partials/form-signup') %>
+          <% } else if (title === 'change') { %>
+            <%- include('partials/form-change') %>
         <% } else { %>
           <%- include('partials/form-topup') %>
         <% } %>
