@@ -2,7 +2,7 @@
   <img
     src="http://localhost:3000/<%= fund.image_url %>" 
     class="card-img-top"
-    alt="<%= fund.title %>"
+    alt="<%= fund.name %>"
     style="height: 150px; object-fit: cover;"
   >
   <div class="card-body">
@@ -26,19 +26,37 @@
           Investor
         </h6>
         <p class="card-text font-weight-bold">
-          <%= fund.Users.length %> person
+          <%= fund.UserFunds.length %> person
         </p>
       </div>
     </div>
     <h6 class="card-subtitle mt-3 mb-2 text-muted">
       Fund Raised
     </h6>
-    <div class="progress">
+    <div class="progress mb-2">
       <div 
         class="progress-bar"
         role="progressbar"
-        style="width: <%= Math.floor((fund.business_value / 3) / fund.business_value * 100) %>%"
+        style="width: <%= Math.floor(getFundRaised(fund.UserFunds) / fund.business_value * 100) %>%"
       ></div>
     </div>
+    <% if (user) { %>
+      <form class="mt-4" action="" method="POST">
+        <input type="hidden" name="UserId" value="<%= user.id %> ">
+        <label class="text-muted mb-1" for="amount">Buy Amount</label>
+        <input
+          type="range"
+          class="custom-range buy-range"
+          min="0"
+          max="<%= `${(fund.business_value - getFundRaised(fund.UserFunds)) / 1e6}` %>"
+          id="amount"
+          value="0"
+        >
+        <div class="d-flex justify-content-between">
+          <p class="card-text font-weight-bold buy-amount"><%= parseCurrency(0) %></p>
+          <button type="submit" class="btn btn-primary">Buy</button>
+        </div>
+      </form>
+    <% } %>
   </div>
 </div>

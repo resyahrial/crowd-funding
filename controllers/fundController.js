@@ -1,21 +1,26 @@
 const fs = require('fs')
 
 const {Fund, User, UserFund} = require('../models')
-const {parseCurrency, parseDate} = require('../helpers')
+const {parseCurrency, parseDate, getFundRaised} = require('../helpers')
 
 class Controller {
   static findAll(req, res) {
     Fund
       .findAll({
         include: {
-          model: UserFund
+          model: UserFund,
+          where: {
+            status: 'Verified'
+          },
+          required: false
         }
       })
       .then(data => {
         res.render('admin/fund', {
           title: 'List',
           data,
-          parseCurrency
+          parseCurrency,
+          getFundRaised
         })
       })
       .catch(err => {
@@ -110,17 +115,24 @@ class Controller {
   }
 
   static home(req, res) {
+    const user = req.session.user
     Fund
       .findAll({
         include: {
-          model: User
+          model: UserFund,
+          where: {
+            status: 'Verified'
+          },
+          required: false
         },
         order: ['due_date']
       })
       .then(data => {
         res.render('home', {
           data,
-          parseCurrency
+          parseCurrency,
+          getFundRaised,
+          user
         })
       })
       .catch(err => {

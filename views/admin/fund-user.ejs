@@ -1,5 +1,7 @@
-<%- include('../partials/header-main') %>
+<%- include('../partials/header-auth') %>
+<%- include('components/navbar') %>
+<div class="container py-3">
   <h1 class="mb-4"><%= data.name %></h1>
   <a href="/admin/funds">Back</a>
   <%- include('components/table-fund-user', {userFunds: data.UserFunds, parseCurrency}) %>
-<%- include('../partials/footer-main') %> 
+<%- include('../partials/footer') %> 

@@ -13,7 +13,7 @@
       <tr>
         <th scope="row"><%= elem.name %></th>
         <td><%= parseCurrency(elem.business_value) %></td>
-        <td><%= parseCurrency(elem.UserFunds.reduce((acc, user) => acc + (user.status === 'Verified' ? user.amount : 0), 0)) %></td>
+        <td><%= parseCurrency(getFundRaised(elem.UserFunds)) %></td>
         <td><%= elem.getRemainDate() <= 0 ? 'Closed' : 'Active' %></td>
         <td>
           <a href="<%= `/admin/funds/edit/${elem.id}` %> " class="btn btn-warning">Edit</a>

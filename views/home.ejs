@@ -1,12 +1,27 @@
-<%- include('partials/header-main') %>
+<%- include('partials/header') %>
   <h1>Find your business</h1>
   <div class="container mt-4">
     <div class="row">
       <% data.forEach(fund => { %>
         <div class="col-4">
-          <%- include('partials/card', {fund, parseCurrency}) %> 
+          <%- include('partials/card', {fund, user, parseCurrency, getFundRaised}) %> 
         </div>
       <% }) %>
     </div>
   </div>
-<%- include('partials/footer-main') %> 
+
+<script>
+  const buyRanges = document.querySelectorAll('.buy-range')
+  buyRanges.forEach(elem => {
+    elem.addEventListener('change', function() {
+      this.parentNode.querySelector('.buy-amount').innerHTML = new Intl.NumberFormat(
+        'id-ID',
+        {
+          style: 'currency',
+          currency: 'IDR'
+        }
+      ).format(this.value * 1e6)
+    })
+  })
+</script>
+<%- include('partials/footer') %> 

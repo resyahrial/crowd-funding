@@ -1,0 +1,16 @@
+<%- include('partials/header-auth') %>
+
+  <div class="container-fluid">
+    <div class="row" style="height: 100vh;">
+      <div class="col-7 bg-secondary"></div>
+      <div class="col-5" style="padding-top: 150px;">
+        <% if (title === 'signin') { %>
+          <%- include('partials/form-signin') %>
+        <% } else { %>
+          <%- include('partials/form-signup') %>
+        <% } %>
+      </div>
+    </div>
+  </div>
+
+<%- include('partials/footer-auth') %> 
