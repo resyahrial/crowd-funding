@@ -4,7 +4,7 @@ const {parseCurrency, checkPassword} = require('../helpers')
 class Controller {
   static signin(req, res) {
     if (req.method === 'GET') {
-      res.render('auth', {
+      res.render('form', {
         title: 'signin'
       })
       return
@@ -13,7 +13,7 @@ class Controller {
     User
       .findOne({
         where: {
-          username: req.body.username
+          username: req.body.username,
         }
       })
       .then(data => {
@@ -22,11 +22,12 @@ class Controller {
         }
         const isAuth = checkPassword(req.body.password, data.password)
         if (isAuth) {
-          const {id, name, is_admin} = data
+          const {id, name, is_admin, balance} = data
           req.session.user = {
             id,
             name,
-            is_admin
+            is_admin,
+            balance
           }
           const path = is_admin ? '/admin' : '/'
           res.redirect(path)
@@ -41,7 +42,7 @@ class Controller {
 
   static signup(req, res) {
     if (req.method === 'GET') {
-      res.render('auth', {
+      res.render('form', {
         title: 'signup'
       })
       return
@@ -79,6 +80,37 @@ class Controller {
           data,
           parseCurrency
         })
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
+
+  static topup(req, res) {
+    if (req.method === 'GET') {
+      res.render('form', {title: null})
+      return
+    }
+
+    const id = req.session.user.id
+    const {balance} = req.body
+    User
+      .findByPk(id)
+      .then(data => {
+        const user = {
+          balance: +data.balance + +req.body.balance
+        }
+        return User
+          .update(user, {
+            where: {
+              id
+            },
+            fields: ['balance']
+          })
+      })
+      .then(() => {
+        req.session.user.balance += +balance
+        res.redirect('/')
       })
       .catch(err => {
         res.send(err)

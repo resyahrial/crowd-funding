@@ -1,5 +1,5 @@
 <%- include('../partials/header-auth') %>
-<%- include('components/navbar') %>
+<%- include('components/navbar', {parseCurrency}) %>
 <div class="container py-3">
   <h1 class="mb-2">List User</h1>
   <%- include('components/table-user', {data, parseCurrency}) %> 

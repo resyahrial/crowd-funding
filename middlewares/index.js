@@ -1,7 +1,8 @@
 const uploadImage = require('./uploadImage')
-const {isAdmin} = require('./auth')
+const {isAdmin, isLogin} = require('./auth')
 
 module.exports = {
   uploadImage,
-  isAdmin
+  isAdmin,
+  isLogin
 }

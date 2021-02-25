@@ -6,8 +6,10 @@
       <div class="col-5" style="padding-top: 150px;">
         <% if (title === 'signin') { %>
           <%- include('partials/form-signin') %>
-        <% } else { %>
+        <% } else if (title === 'signup') { %>
           <%- include('partials/form-signup') %>
+        <% } else { %>
+          <%- include('partials/form-topup') %>
         <% } %>
       </div>
     </div>

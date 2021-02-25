@@ -72,11 +72,12 @@ module.exports = (sequelize, DataTypes) => {
         user.balance = 0
       },
       afterCreate: (user) => {
-        const {id, name, username} = user
+        const {id, name, username, balance} = user
         return {
           id,
           name,
-          is_admin: username === 'admin'
+          is_admin: username === 'admin',
+          balance
         }
       }
     }

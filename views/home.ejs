@@ -1,4 +1,4 @@
-<%- include('partials/header') %>
+<%- include('partials/header', {balance: user ? user.balance : 0, parseCurrency}) %>
   <h1>Find your business</h1>
   <div class="container mt-4">
     <div class="row">

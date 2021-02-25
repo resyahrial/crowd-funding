@@ -7,8 +7,17 @@
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
             <%= user.name %> 
           </a>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="/profile">Profile</a>
+          <div class="dropdown-menu dropdown-menu-right">
+            <div class="dropdown-item">
+              <p class="mb-1 text-muted">Balance</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 mr-4"><%= parseCurrency(balance) %> </h6>
+                <a href="/topup" class="btn btn-sm btn-primary h-100">Top up</a>
+                <div>
+                </div>
+              </div>
+            </div>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="/signout">Signout</a>
           </div>
         </li>

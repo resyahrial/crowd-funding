@@ -6,4 +6,12 @@ const isAdmin = (req, res, next) => {
   next();
 }
 
-module.exports = {isAdmin}
+const isLogin = (req, res, next) => {
+  const userSession = req.session.user
+  if (!userSession) {
+    res.redirect('/');
+  }
+  next();
+}
+
+module.exports = {isAdmin, isLogin}
