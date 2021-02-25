@@ -36,7 +36,8 @@ class Controller {
         }
       })
       .catch(err => {
-        res.send(err.message)
+        const errArr = err.message.split(',\n')
+        res.render('failed', {errMsg: errArr[0]})
       })
   }
 
@@ -59,7 +60,7 @@ class Controller {
       })
       .catch(err => {
         const errArr = err.message.split(',\n')
-        res.send(errArr[0])
+        res.render('failed', {errMsg: errArr[0]})
       })
   }
 
@@ -82,7 +83,7 @@ class Controller {
         })
       })
       .catch(err => {
-        res.send(err)
+        res.render('failed', {errMsg: err.message})
       })
   }
 
@@ -113,7 +114,7 @@ class Controller {
         res.redirect('/')
       })
       .catch(err => {
-        res.send(err)
+        res.render('failed', {errMsg: err.message})
       })
   }
 }

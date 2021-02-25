@@ -1,10 +1,16 @@
 <div class="card shadow">
-  <img
-    src="http://localhost:3000/<%= fund.image_url %>" 
-    class="card-img-top"
-    alt="<%= fund.name %>"
-    style="height: 150px; object-fit: cover;"
-  >
+  <div class="card-img-top w-100 overflow-hidden position-relative" style="height: 175px;">
+    <p
+      class="badge badge-primary position-absolute mt-3 mr-4"
+      style="right: 0;padding: 5px 10px;">
+      <%= fund.getRemainDate() %>  day
+    </p>
+    <img
+      src="http://localhost:3000/<%= fund.image_url %>"
+      class="img-fluid"
+      alt="<%= fund.name %>"
+    >
+  </div>
   <div class="card-body">
     <h4 class="card-title mb-1">
       <%= fund.name %>
@@ -55,7 +61,12 @@
         >
         <div class="d-flex justify-content-between">
           <p class="card-text font-weight-bold buy-amount"><%= parseCurrency(0) %></p>
-          <button type="submit" class="btn btn-primary">Buy</button>
+          <button 
+            type="submit"
+            class="btn btn-primary"
+          >
+            Buy
+          </button>
         </div>
       </form>
     <% } %>

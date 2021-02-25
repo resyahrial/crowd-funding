@@ -7,6 +7,7 @@ class Controller {
   static findAll(req, res) {
     Fund
       .findAll({
+        order: [['name', 'ASC']],
         include: {
           model: UserFund,
           where: {
@@ -24,7 +25,7 @@ class Controller {
         })
       })
       .catch(err => {
-        res.send(err.message)
+        res.render('failed', {errMsg: err.message})
       })
   }
 
@@ -39,14 +40,22 @@ class Controller {
     }
 
     const {name, type, business_value, due_date, description} = req.body
-    const fund = {name, type, business_value, due_date, description, image_url: `images/${req.file.filename}`}
+    if (!req.file) {
+      res.render('failed', {errMsg: `Image can't be empty`})
+      return
+    }
+    const image_url = `images/${req.file.filename}`
+    const fund = {name, type, business_value, due_date, description, image_url}
     Fund
       .create(fund)
       .then(() => {
         res.redirect('/admin/funds')
       })
       .catch(err => {
-        res.send(err.message)
+        fs.unlink(`public/${image_url}`, (error) => {
+          const errArr = err.message.split(',\n')
+          res.render('failed', {errMsg: errArr[0]})
+        })
       })
   }
 
@@ -67,7 +76,7 @@ class Controller {
           })
         })
         .catch(err => {
-          res.send(err.message)
+          res.render('failed', {errMsg: err.message})
         })
       return
     }
@@ -81,36 +90,35 @@ class Controller {
     Fund
       .update(fund, {
         where: {
-          id
-        }
+          id,
+        },
+        individualHooks: true
       })
       .then(() => {
         res.redirect('/admin/funds')
       })
       .catch(err => {
-        res.send(err.message)
+        res.render('failed', {errMsg: err.message})
       })
   }
 
   static delete(req, res) {
     const id = req.params.id
     Fund
-      .destroy({
-        where: {
-          id
-        }
-      })
-      .then(() => {
-        return Fund.findByPk(id, {
-          attributes: ['image_url']
-        })
-      })
+      .findByPk(id)
       .then(data => {
         fs.unlinkSync(`public/${data.image_url}`)
+        return Fund.destroy({
+          where: {
+            id
+          }
+        })
+      })
+      .then(() => {
         res.redirect('/admin/funds')
       })
       .catch(err => {
-        res.send(err)
+        res.render('failed', {errMsg: err.message})
       })
   }
 
@@ -125,7 +133,7 @@ class Controller {
           },
           required: false
         },
-        order: ['due_date']
+        order: [['due_date', 'ASC']]
       })
       .then(data => {
         res.render('home', {
@@ -136,7 +144,7 @@ class Controller {
         })
       })
       .catch(err => {
-        res.send(err.message)
+        res.render('failed', {errMsg: err.message})
       })
   }
 
@@ -159,14 +167,14 @@ class Controller {
             status
           })
         })
-        // res.send(passedData)
         res.render('admin/fund-user', {
           data: passedData,
           parseCurrency
         })
       })
       .catch(err => 
-        res.send(err))
+        res.render('failed', {errMsg: err.message})
+      )
   }
 }
 

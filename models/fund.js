@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     getRemainDate() {
-      const remainDay = new Date() - this.due_date
+      const remainDay = this.due_date - new Date()
       return new Date(remainDay).getDate()
     }
   };
@@ -50,12 +50,9 @@ module.exports = (sequelize, DataTypes) => {
     due_date: {
       type: DataTypes.DATE,
       validate: {
-        minNextWeek: (value) => {
-          const currDate = new Date()
-          const nextWeek = currDate.setDate(currDate.getDate() + 7)
-          if (value < nextWeek) {
-            throw new Error(`Due date minimum is 7 day from now`)
-          }
+        isDate: {
+          args: true,
+          msg: 'Due date must be on date format'
         }
       }
     },
@@ -64,6 +61,19 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Fund',
+    hooks: {
+      beforeCreate: (fund) => {
+        const currDate = new Date()
+        const nextWeek = currDate.setDate(currDate.getDate() + 6)
+        fund.due_date = new Date(fund.due_date) < currDate || new Date(fund.due_date) < new Date(nextWeek)
+          ? nextWeek : fund.due_date
+      },
+      beforeUpdate: (fund) => {
+        if (fund.due_date < new Date()) {
+          throw new Error(`Due date can't be day before today`)
+        }
+      }
+    }
   });
   return Fund;
 };

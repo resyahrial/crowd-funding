@@ -27,7 +27,7 @@ class Controller {
         res.redirect(`/admin/funds/${fundId}/users`)
       })
       .catch(err => {
-        res.send(err)
+        res.render('failed', {errMsg: err.message})
       })
   }
 
@@ -74,7 +74,7 @@ class Controller {
         res.redirect(`/admin/funds/${fundId}/users`)
       })
       .catch(err => {
-        res.send(err)
+        res.render('failed', {errMsg: err.message})
       })
   }
 
@@ -82,7 +82,7 @@ class Controller {
     const {FundId, amount} = req.body
     const buyAmount = +amount * 1e6
     if (+req.session.user.balance < buyAmount) {
-      res.send('Balance not enough, please top up first')
+      res.render('failed', {errMsg: 'Balance not enough, please top up first'})
       return
     }
     
@@ -114,7 +114,7 @@ class Controller {
         res.redirect('/')
       })
       .catch(err => {
-        res.send(err)
+        res.render('failed', {errMsg: err.message})
       })
   }
 }
