@@ -1,6 +1,6 @@
 const {Router} = require('express')
 
-const {FundController, UserController} = require('../controllers')
+const {FundController, UserFundController} = require('../controllers')
 const {isAdmin} = require('../middlewares')
 
 const userRouter = require('./userRouter')
@@ -11,6 +11,7 @@ const router = Router()
 
 router.get('/', FundController.home)
 router.use('/', userRouter)
+router.post('/userfund/buy', UserFundController.buy)
 
 router.use(isAdmin)
 //admin

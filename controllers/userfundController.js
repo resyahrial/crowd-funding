@@ -81,6 +81,46 @@ class Controller {
         res.send(err)
       })
   }
+
+  static buy(req, res) {
+    const {FundId, amount} = req.body
+    const buyAmount = +amount * 1e6
+    if (+req.session.user.balance < buyAmount) {
+      res.send('Balance not enough, please top up first')
+      return
+    }
+    
+    const UserId = req.session.user.id
+    const userfund = {
+      UserId: UserId,
+      FundId: +FundId,
+      amount: buyAmount
+    }
+    UserFund
+      .create(userfund)
+      .then(() => {
+        return User.findByPk(UserId)
+      })
+      .then(data => {
+        const user = {
+          balance: +data.balance - buyAmount
+        }
+        return User
+          .update(user, {
+            where: {
+              id: UserId
+            },
+            fields: ['balance']
+          })
+      })
+      .then(() => {
+        req.session.user.balance -= buyAmount
+        res.redirect('/')
+      })
+      .catch(err => {
+        res.send(err)
+      })
+  }
 }
 
 module.exports = Controller

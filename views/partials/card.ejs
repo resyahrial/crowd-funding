@@ -41,8 +41,8 @@
       ></div>
     </div>
     <% if (user) { %>
-      <form class="mt-4" action="" method="POST">
-        <input type="hidden" name="UserId" value="<%= user.id %> ">
+      <form class="mt-4" action="/userfund/buy" method="POST">
+        <input type="hidden" name="FundId" value="<%= fund.id %> ">
         <label class="text-muted mb-1" for="amount">Buy Amount</label>
         <input
           type="range"
@@ -50,6 +50,7 @@
           min="0"
           max="<%= `${(fund.business_value - getFundRaised(fund.UserFunds)) / 1e6}` %>"
           id="amount"
+          name="amount"
           value="0"
         >
         <div class="d-flex justify-content-between">
