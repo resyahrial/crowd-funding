@@ -17,11 +17,24 @@ module.exports = (sequelize, DataTypes) => {
   UserFund.init({
     UserId: DataTypes.INTEGER,
     FundId: DataTypes.INTEGER,
-    amount: DataTypes.INTEGER,
+    amount: {
+      type: DataTypes.INTEGER,
+      validate: {
+        min: {
+          args: [1000000],
+          msg: `Minimum buy is Rp 1.000.000,-`
+        }
+      }
+    },
     status: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'UserFund',
+    hooks: {
+      beforeCreate: (userfund) => {
+        userfund.status = 'Pending'
+      }
+    }
   });
   return UserFund;
 };

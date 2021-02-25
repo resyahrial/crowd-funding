@@ -16,10 +16,51 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   User.init({
-    username: DataTypes.STRING,
-    password: DataTypes.STRING,
+    username: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Username can't be empty`
+        },
+        isUnique: (username, next) => {
+          User
+            .findOne({
+              where: {
+                username
+              }
+            })
+            .then(user => {
+              if (user) {
+                return next('Username already in use')
+              }
+              return next()
+            })
+            .catch(err => {
+              return next(err.message)
+            })
+        }
+      }
+    },
+    password: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Password can't be empty`
+        }
+      }
+    },
     is_admin: DataTypes.BOOLEAN,
-    name: DataTypes.STRING,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Name can't be empty`
+        }
+      }
+    },
     balance: DataTypes.INTEGER
   }, {
     sequelize,
@@ -27,6 +68,16 @@ module.exports = (sequelize, DataTypes) => {
     hooks: {
       beforeCreate: (user) => {
         user.password = hashPassword(user.password)
+        user.is_admin = user.username.toLowerCase() === 'admin'
+        user.balance = 0
+      },
+      afterCreate: (user) => {
+        const {id, name, username} = user
+        return {
+          id,
+          name,
+          is_admin: username === 'admin'
+        }
       }
     }
   });

@@ -20,10 +20,45 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Fund.init({
-    name: DataTypes.STRING,
-    type: DataTypes.STRING,
-    business_value: DataTypes.INTEGER,
-    due_date: DataTypes.DATE,
+    name: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Name can't be empty`
+        }
+      }
+    },
+    type: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Type can't be empty`
+        }
+      }
+    },
+    business_value: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: `Business value can't be empty`
+        }
+      }
+    },
+    due_date: {
+      type: DataTypes.DATE,
+      validate: {
+        minNextWeek: (value) => {
+          const currDate = new Date()
+          const nextWeek = currDate.setDate(currDate.getDate() + 7)
+          if (value < nextWeek) {
+            throw new Error(`Due date minimum is 7 day from now`)
+          }
+        }
+      }
+    },
     image_url: DataTypes.STRING,
     description: DataTypes.STRING
   }, {

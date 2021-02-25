@@ -10,10 +10,7 @@ const userfundRouter = require('./userfundRouter')
 const router = Router()
 
 router.get('/', FundController.home)
-router.get('/signin', UserController.signin)
-router.post('/signin', UserController.signin)
-router.get('/signup', UserController.signup)
-router.get('/signout', UserController.signout)
+router.use('/', userRouter)
 
 router.use(isAdmin)
 //admin

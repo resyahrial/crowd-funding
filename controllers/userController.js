@@ -40,9 +40,26 @@ class Controller {
   }
 
   static signup(req, res) {
-    res.render('auth', {
-      title: 'signup'
-    })
+    if (req.method === 'GET') {
+      res.render('auth', {
+        title: 'signup'
+      })
+      return
+    }
+
+    const {name, username, password} = req.body
+    const user = {name, username, password}
+    User
+      .create(user)
+      .then(data => {
+        req.session.user = data
+        const path = data.is_admin ? '/admin' : '/'
+        res.redirect(path)
+      })
+      .catch(err => {
+        const errArr = err.message.split(',\n')
+        res.send(errArr[0])
+      })
   }
 
   static signout(req, res) {
