@@ -1,7 +1,12 @@
 <%- include('../partials/header-auth') %>
 <%- include('components/navbar', {parseCurrency}) %>
 <div class="container py-3">
-  <h1 class="mb-2">List User</h1>
-  <%- include('components/table-user', {data, parseCurrency}) %> 
+  <h1 class="mb-2"><%= title %> </h1>
+  <% if (title === 'List User') { %>
+    <%- include('components/table-user', {data, parseCurrency}) %>
+  <% } else { %>
+    <a href="javascript:history.back()">Back</a>
+    <%- include('components/table-user-fund', {data, parseCurrency}) %>
+  <% } %>
   
 <%- include('../partials/footer') %> 

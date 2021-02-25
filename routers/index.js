@@ -1,6 +1,6 @@
 const {Router} = require('express')
 
-const {FundController, UserFundController} = require('../controllers')
+const {FundController, UserFundController, UserController} = require('../controllers')
 const {isAdmin} = require('../middlewares')
 
 const userRouter = require('./userRouter')
@@ -19,7 +19,8 @@ router.get('/admin', (req, res) => {
   res.redirect('/admin/funds')
 })
 router.use('/admin/funds', fundRouter)
-router.use('/admin/users', userRouter)
 router.use('/admin/userfund', userfundRouter)
+router.get('/admin/users', UserController.findAll)
+router.get('/admin/users/:id', UserController.getFund)
 
 module.exports = router

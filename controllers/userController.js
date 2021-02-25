@@ -1,4 +1,4 @@
-const {User} = require('../models')
+const {User, Fund} = require('../models')
 const {parseCurrency, checkPassword, hashPassword} = require('../helpers')
 
 class Controller {
@@ -78,6 +78,7 @@ class Controller {
       .then(data => {
         data = data.filter(el => el.name !== 'admin')
         res.render('admin/user', {
+          title: 'List User',
           data,
           parseCurrency
         })
@@ -166,6 +167,37 @@ class Controller {
         req.session.user = dataContainer
         const path = dataContainer.is_admin ? '/admin' : '/'
         res.redirect(path)
+      })
+      .catch(err => {
+        res.render('failed', {errMsg: err.message})
+      })
+  }
+
+  static getFund(req, res) {
+    const id = req.params.id
+    let userName = ''
+    User
+      .findByPk(id)
+      .then(data => {
+        return data.getFunds()
+      })
+      .then(data => {
+        userName = data.name
+        const filteredData = []
+        data.forEach(el => {
+          if (el.UserFund.status !== 'Rejected') {
+            filteredData.push({
+              name: el.name,
+              amount: el.UserFund.amount,
+              status: el.UserFund.status
+            })
+          }
+        });
+        res.render('admin/user', {
+          title: userName,
+          data: filteredData,
+          parseCurrency
+        })
       })
       .catch(err => {
         res.render('failed', {errMsg: err.message})

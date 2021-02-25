@@ -4,7 +4,7 @@
   "description": "Simple Crowd Funding Management",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app"
+    "start": "nodemon app.js"
   },
   "repository": {
     "type": "git",
