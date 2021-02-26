@@ -107,7 +107,7 @@ class Controller {
     Fund
       .findByPk(id)
       .then(data => {
-        fs.unlinkSync(`public/${data.image_url}`)
+        // fs.unlinkSync(`public/${data.image_url}`)
         return Fund.destroy({
           where: {
             id
