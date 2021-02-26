@@ -84,7 +84,7 @@ class Controller {
     const {name, type, business_value, due_date, description, last_image_url} = req.body
     const fund = {name, type, business_value, due_date, description}
     if (req.file) {
-      fs.unlinkSync(`public/${last_image_url}`)
+      // fs.unlinkSync(`public/${last_image_url}`)
       fund.image_url = `images/${req.file.filename}`
     }
     Fund
