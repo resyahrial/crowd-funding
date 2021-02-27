@@ -2,7 +2,7 @@
 
 ### [Live Site](https://simple-crowd-funding.herokuapp.com/)
 
-![Simple Crowd Funding Management](https://i.ibb.co/RhrwTpb/simple-crowd-funding.jpg)
+![Simple Crowd Funding Management](https://i.imgur.com/a2LoZff.jpg)
 
 ## Introduction
 This is a code repository for my personal portofolio
