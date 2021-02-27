@@ -7,7 +7,9 @@
 ## Introduction
 This is a code repository for my personal portofolio
 
-It's use Express, EJS, Postgres, and Sequelize for its ORM
+It's use **Express** with **EJS** as template engine
+
+I also use **PostgreSQL** as RDMS with **Sequelize** for its ORM
 
 Setup:
 - Use sequelize-cli to setup db
